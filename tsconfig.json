@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/node12/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "jsx": "react",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "skipLibCheck": true,
+    "lib": [
+      "DOM"
+    ]
+  },
+  "exclude": [
+    "./src/server "
+  ],
+  "include": [
+    "./src/client/*",
+    "./src/client/types/**/*.d.ts"
+  ]
+}
