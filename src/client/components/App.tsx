@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
+import axios from 'axios';
 import { apiRoute } from '../utils';
 import './style.css';
 
@@ -23,72 +24,54 @@ const App: FunctionComponent = () => {
     textForDelete: '',
   });
 
-  const { username, textForPost, textForPut, textForDelete } = data;
+  const { username, textForPost, textForPut, textForDelete, textOfPostTest, textOfPutTest, textOfDeleteTest } = data;
   const inputText = 'Input text...';
 
   const getUser = () => {
-    fetch(apiRoute.getRoute('test'))
-      .then(res => res.json())
-      .then(res => setData({ ...data, username: res.username }));
+    axios.get(apiRoute.getRoute('test')).then(({ data: res }) => setData({ ...data, username: res.username }));
   };
 
   const sendUserInfo = () => {
-    const text = data.textOfPostTest;
+    const text = textOfPostTest;
 
     text.trim() &&
-      fetch(apiRoute.getRoute('test'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          //'Content-Type': 'application/x-www-form -urlencoded',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ text }),
-      })
-        .then(res => res.json())
-        .then(res => setData({ ...data, textForPost: res.text }));
+      axios
+        .post(apiRoute.getRoute('test'), {
+          text,
+        })
+        .then(({ data: res }) => setData({ ...data, textForPost: res.text }));
   };
 
   const changeUserInfo = () => {
-    data.textOfPutTest.trim() &&
-      fetch(apiRoute.getRoute('test'), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ text: data.textOfPutTest }),
-      })
-        .then(res => res.json())
-        .then(res => setData({ ...data, textForPut: res.text }));
+    textOfPutTest.trim() &&
+      axios
+        .put(apiRoute.getRoute('test'), {
+          text: textOfPutTest,
+        })
+        .then(({ data: res }) => setData({ ...data, textForPut: res.text }));
   };
 
   const deleteUserInfo = () => {
-    data.textOfDeleteTest.trim() &&
-      fetch(apiRoute.getRoute('test'), {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ text: data.textOfDeleteTest }),
-      })
-        .then(res => res.json())
-        .then(res => setData({ ...data, textForDelete: res.text }));
+    textOfDeleteTest.trim() &&
+      axios
+        .delete(apiRoute.getRoute('test'), {
+          data: { text: textOfDeleteTest },
+        })
+        .then(({ data: res }) => setData({ ...data, textForDelete: res.text }));
   };
 
   return (
     <ul className='mx-auto px-8 py-10'>
-      <li className='mx-auto mb-14'>
+      <li className='mx-auto mb-10'>
         <div className='flex items-center'>
           <label className='w-60'>{'Result for Get: '}</label>
           <button className='api-button' onClick={getUser}>
             {'Test Get'}
           </button>
         </div>
-        <h2 className='font-bold text-gray-900'>{!!username && `Hello ${username}!`}</h2>
+        <h2 className='font-bold text-gray-900 mb-4'>{!!username && `Hello ${username}!`}</h2>
       </li>
-      <li className='mx-auto mb-6'>
+      <li className='mx-auto mb-4'>
         <div className='flex mb-4'>
           <input
             className='border-solid border-2 border-black px-4 w-60'
@@ -104,7 +87,7 @@ const App: FunctionComponent = () => {
           <h3>{textForPost}</h3>
         </div>
       </li>
-      <li className='mx-auto mb-6 justify-between'>
+      <li className='mx-auto mb-4 justify-between'>
         <div className='flex mb-4'>
           <input
             className='border-solid border-2 border-black px-4 w-60'
@@ -120,7 +103,7 @@ const App: FunctionComponent = () => {
           <h3>{textForPut}</h3>
         </div>
       </li>
-      <li className='mx-auto mb-6 justify-between'>
+      <li className='mx-auto mb-4 justify-between'>
         <div className='flex mb-4'>
           <input
             className='border-solid border-2 border-black px-4 w-60'
