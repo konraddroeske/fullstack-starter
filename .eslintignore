@@ -2,5 +2,3 @@ node_modules
 built
 package.json
 yarn.lock
-.eslintrc.js
-webpack.config.js

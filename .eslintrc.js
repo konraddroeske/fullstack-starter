@@ -24,7 +24,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.server.json'],
+    project: ['./tsconfig.json', './tsconfig.server.json', './tsconfig.eslint.json'],
   },
   rules: {
     'no-console': 'off',
