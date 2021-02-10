@@ -34,39 +34,36 @@ const App: FunctionComponent = () => {
   const sendUserInfo = () => {
     const text = textOfPostTest;
 
-    text.trim() &&
-      axios
-        .post(apiRoute.getRoute('test'), {
-          text,
-        })
-        .then(({ data: res }) => setData({ ...data, textForPost: res.text }));
+    axios
+      .post(apiRoute.getRoute('test'), {
+        text,
+      })
+      .then(({ data: res }) => setData({ ...data, textForPost: res.text }));
   };
 
   const changeUserInfo = () => {
-    textOfPutTest.trim() &&
-      axios
-        .put(apiRoute.getRoute('test'), {
-          text: textOfPutTest,
-        })
-        .then(({ data: res }) => setData({ ...data, textForPut: res.text }));
+    axios
+      .put(apiRoute.getRoute('test'), {
+        text: textOfPutTest,
+      })
+      .then(({ data: res }) => setData({ ...data, textForPut: res.text }));
   };
 
   const deleteUserInfo = () => {
-    textOfDeleteTest.trim() &&
-      axios
-        .delete(apiRoute.getRoute('test'), {
-          data: { text: textOfDeleteTest },
-        })
-        .then(({ data: res }) => setData({ ...data, textForDelete: res.text }));
+    axios
+      .delete(apiRoute.getRoute('test'), {
+        data: { text: textOfDeleteTest },
+      })
+      .then(({ data: res }) => setData({ ...data, textForDelete: res.text }));
   };
 
   return (
     <ul className='mx-auto px-8 py-10'>
       <li className='mx-auto mb-10'>
         <div className='flex items-center'>
-          <label className='w-60'>{'Result for Get: '}</label>
-          <button className='api-button' onClick={getUser}>
-            {'Test Get'}
+          <p className='w-60'>{'Result for Get: '}</p>
+          <button type='button' className='api-button' onClick={getUser}>
+            Test Get
           </button>
         </div>
         <h2 className='font-bold text-gray-900 mb-4'>{!!username && `Hello ${username}!`}</h2>
@@ -78,12 +75,12 @@ const App: FunctionComponent = () => {
             onChange={e => setData({ ...data, textOfPostTest: e.target.value })}
             placeholder={inputText}
           />
-          <button className='api-button' onClick={sendUserInfo}>
-            {'Test Post'}
+          <button type='button' className='api-button' onClick={sendUserInfo}>
+            Test Post
           </button>
         </div>
         <div className='flex items-center'>
-          <label className='mr-2'>{'Result for Post: '}</label>
+          <p className='mr-2'>{'Result for Post: '}</p>
           <h3>{textForPost}</h3>
         </div>
       </li>
@@ -94,8 +91,8 @@ const App: FunctionComponent = () => {
             onChange={e => setData({ ...data, textOfPutTest: e.target.value })}
             placeholder={inputText}
           />
-          <button className='api-button' onClick={changeUserInfo}>
-            {'Test Put'}
+          <button type='button' className='api-button' onClick={changeUserInfo}>
+            Test Put
           </button>
         </div>
         <div className='flex items-center'>
@@ -110,12 +107,12 @@ const App: FunctionComponent = () => {
             onChange={e => setData({ ...data, textOfDeleteTest: e.target.value })}
             placeholder={inputText}
           />
-          <button className='api-button' onClick={deleteUserInfo}>
-            {'Test Delete'}
+          <button type='button' className='api-button' onClick={deleteUserInfo}>
+            Test Delete
           </button>
         </div>
         <div className='flex items-center'>
-          <label className='mr-2'>{'Result for Delete: '}</label>
+          <p className='mr-2'>{'Result for Delete: '}</p>
           <h3>{textForDelete}</h3>
         </div>
       </li>
