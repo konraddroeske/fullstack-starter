@@ -31,12 +31,4 @@ module.exports = {
     'comma-dangle': 'off',
     'react/jsx-filename-extension': 'off',
   },
-  overrides: [
-    {
-      files: ['webpack.*.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 0,
-      },
-    },
-  ],
 };

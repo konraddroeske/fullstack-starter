@@ -24,11 +24,21 @@ const App: FunctionComponent = () => {
     textForDelete: '',
   });
 
-  const { username, textForPost, textForPut, textForDelete, textOfPostTest, textOfPutTest, textOfDeleteTest } = data;
+  const {
+    username,
+    textForPost,
+    textForPut,
+    textForDelete,
+    textOfPostTest,
+    textOfPutTest,
+    textOfDeleteTest,
+  } = data;
   const inputText = 'Input text...';
 
   const getUser = () => {
-    axios.get(apiRoute.getRoute('test')).then(({ data: res }) => setData({ ...data, username: res.username }));
+    axios
+      .get(apiRoute.getRoute('test'))
+      .then(({ data: res }) => setData({ ...data, username: res.username }));
   };
 
   const sendUserInfo = () => {
@@ -58,61 +68,61 @@ const App: FunctionComponent = () => {
   };
 
   return (
-    <ul className='mx-auto px-8 py-10'>
-      <li className='mx-auto mb-10'>
-        <div className='flex items-center'>
-          <p className='w-60'>{'Result for Get: '}</p>
-          <button type='button' className='api-button' onClick={getUser}>
+    <ul className="mx-auto px-8 py-10">
+      <li className="mx-auto mb-10">
+        <div className="flex items-center">
+          <p className="w-60">{'Result for Get: '}</p>
+          <button type="button" className="api-button" onClick={getUser}>
             Test Get
           </button>
         </div>
-        <h2 className='font-bold text-gray-900 mb-4'>{!!username && `Hello ${username}!`}</h2>
+        <h2 className="font-bold text-gray-900 mb-4">{!!username && `Hello ${username}!`}</h2>
       </li>
-      <li className='mx-auto mb-4'>
-        <div className='flex mb-4'>
+      <li className="mx-auto mb-4">
+        <div className="flex mb-4">
           <input
-            className='border-solid border-2 border-black px-4 w-60'
-            onChange={e => setData({ ...data, textOfPostTest: e.target.value })}
+            className="border-solid border-2 border-black px-4 w-60"
+            onChange={(e) => setData({ ...data, textOfPostTest: e.target.value })}
             placeholder={inputText}
           />
-          <button type='button' className='api-button' onClick={sendUserInfo}>
+          <button type="button" className="api-button" onClick={sendUserInfo}>
             Test Post
           </button>
         </div>
-        <div className='flex items-center'>
-          <p className='mr-2'>{'Result for Post: '}</p>
+        <div className="flex items-center">
+          <p className="mr-2">{'Result for Post: '}</p>
           <h3>{textForPost}</h3>
         </div>
       </li>
-      <li className='mx-auto mb-4 justify-between'>
-        <div className='flex mb-4'>
+      <li className="mx-auto mb-4 justify-between">
+        <div className="flex mb-4">
           <input
-            className='border-solid border-2 border-black px-4 w-60'
-            onChange={e => setData({ ...data, textOfPutTest: e.target.value })}
+            className="border-solid border-2 border-black px-4 w-60"
+            onChange={(e) => setData({ ...data, textOfPutTest: e.target.value })}
             placeholder={inputText}
           />
-          <button type='button' className='api-button' onClick={changeUserInfo}>
+          <button type="button" className="api-button" onClick={changeUserInfo}>
             Test Put
           </button>
         </div>
-        <div className='flex items-center'>
-          <label className='mr-2'>{'Result for Put: '}</label>
+        <div className="flex items-center">
+          <label className="mr-2">{'Result for Put: '}</label>
           <h3>{textForPut}</h3>
         </div>
       </li>
-      <li className='mx-auto mb-4 justify-between'>
-        <div className='flex mb-4'>
+      <li className="mx-auto mb-4 justify-between">
+        <div className="flex mb-4">
           <input
-            className='border-solid border-2 border-black px-4 w-60'
-            onChange={e => setData({ ...data, textOfDeleteTest: e.target.value })}
+            className="border-solid border-2 border-black px-4 w-60"
+            onChange={(e) => setData({ ...data, textOfDeleteTest: e.target.value })}
             placeholder={inputText}
           />
-          <button type='button' className='api-button' onClick={deleteUserInfo}>
+          <button type="button" className="api-button" onClick={deleteUserInfo}>
             Test Delete
           </button>
         </div>
-        <div className='flex items-center'>
-          <p className='mr-2'>{'Result for Delete: '}</p>
+        <div className="flex items-center">
+          <p className="mr-2">{'Result for Delete: '}</p>
           <h3>{textForDelete}</h3>
         </div>
       </li>

@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.tsx'],
@@ -73,8 +73,8 @@ module.exports = {
       filename: './css/[name].css',
       chunkFilename: './css/[id].css',
     }),
-    // new CopyPlugin({
-    //   patterns: [{ from: './src/client/assets', to: 'assets' }],
-    // }),
+    new CopyPlugin({
+      patterns: [{ from: path.resolve(__dirname, './src/client/assets'), to: 'assets' }],
+    }),
   ],
 };
