@@ -1,4 +1,3 @@
-import test from './routes/test';
-import extra from './routes/extra';
+import todos from './routes/todos';
 
-export default { extra, test };
+export default { todos };

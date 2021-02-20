@@ -37,7 +37,7 @@ const App: FunctionComponent = () => {
 
   const getUser = () => {
     axios
-      .get(apiRoute.getRoute('test'))
+      .get(apiRoute.getRoute('todos'))
       .then(({ data: res }) => setData({ ...data, username: res.username }));
   };
 
@@ -45,7 +45,7 @@ const App: FunctionComponent = () => {
     const text = textOfPostTest;
 
     axios
-      .post(apiRoute.getRoute('test'), {
+      .post(apiRoute.getRoute('todos'), {
         text,
       })
       .then(({ data: res }) => setData({ ...data, textForPost: res.text }));
@@ -53,7 +53,7 @@ const App: FunctionComponent = () => {
 
   const changeUserInfo = () => {
     axios
-      .put(apiRoute.getRoute('test'), {
+      .put(apiRoute.getRoute('todos'), {
         text: textOfPutTest,
       })
       .then(({ data: res }) => setData({ ...data, textForPut: res.text }));
@@ -61,7 +61,7 @@ const App: FunctionComponent = () => {
 
   const deleteUserInfo = () => {
     axios
-      .delete(apiRoute.getRoute('test'), {
+      .delete(apiRoute.getRoute('todos'), {
         data: { text: textOfDeleteTest },
       })
       .then(({ data: res }) => setData({ ...data, textForDelete: res.text }));

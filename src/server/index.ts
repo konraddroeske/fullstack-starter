@@ -11,7 +11,6 @@ const port: number = Number(process.env.PORT) || 8050;
 
 app.use(express.static('dist'));
 app.get('/', (req: Request, res: Response) => {
-  console.log('sending index.html');
   res.sendFile('/dist/index.html');
 });
 

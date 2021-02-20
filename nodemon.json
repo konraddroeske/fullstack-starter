@@ -8,6 +8,6 @@
   "watch": [
     "src/server"
   ],
-  "exec": "tsc -p tsconfig.server.json && node built/",
+  "exec": "tsc -p tsconfig.server.json && node -r dotenv/config built/",
   "ext": "ts"
 }
