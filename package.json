@@ -4,7 +4,7 @@
   "description": "React, Typescript, Express, and TailwindCSS.",
   "main": "built/index.js",
   "scripts": {
-    "build": "webpack --config ./bundler/webpack.prod.js",
+    "build": "export NODE_ENV=production && webpack --config ./bundler/webpack.prod.js",
     "start": "npm run build && npm run server",
     "client": "webpack serve --config ./bundler/webpack.dev.js --devtool inline-source-map --hot",
     "server": "tsc -p tsconfig.server.json && node built/",

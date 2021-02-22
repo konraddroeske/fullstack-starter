@@ -1,7 +1,12 @@
-const tailwindCSS = require('tailwindcss');
-const postCSSPresetEnv = require('postcss-preset-env');
-const autoprefixer = require('autoprefixer');
+// const tailwindCSS = require('tailwindcss');
+// const postCSSPresetEnv = require('postcss-preset-env');
+// const autoprefixer = require('autoprefixer');
+//
+// module.exports = {
+//   plugins: [tailwindCSS, postCSSPresetEnv, autoprefixer],
+// };
 
 module.exports = {
-  plugins: [tailwindCSS, postCSSPresetEnv, autoprefixer],
+  // eslint-disable-next-line global-require
+  plugins: [require('tailwindcss')],
 };

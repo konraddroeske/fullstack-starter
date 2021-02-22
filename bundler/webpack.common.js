@@ -29,6 +29,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
       {
@@ -61,7 +62,7 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, '../src/client/assets'),
-          to: './assets',
+          to: 'assets',
         },
       ],
     }),
