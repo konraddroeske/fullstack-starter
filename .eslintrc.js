@@ -37,5 +37,6 @@ module.exports = {
     'comma-dangle': 'off',
     'react/jsx-filename-extension': 'off',
     'react/prop-types': 0,
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };

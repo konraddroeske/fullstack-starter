@@ -7,17 +7,16 @@
     "jsx": "react",
     "module": "CommonJS",
     "sourceMap": true,
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "skipLibCheck": true,
     "lib": [
       "DOM"
     ]
   },
   "exclude": [
-    "./src/server "
+    "./src/server"
   ],
   "include": [
-    "./src/client/*",
-    "./src/client/types/**/*.d.ts"
+    "./src/client"
   ]
 }

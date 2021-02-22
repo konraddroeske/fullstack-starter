@@ -1,9 +1,8 @@
 {
   "include": [
     ".eslintrc.js",
-    "webpack.config.js",
+    "./bundler",
     "tailwind.config.js",
-    "postcss.config.js",
-    "src/**/*.{ts,tsx}"
+    "postcss.config.js"
   ]
 }
