@@ -8,7 +8,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   extends: [
-    'airbnb',
     'airbnb/hooks',
     'airbnb-typescript',
     'plugin:import/errors',
@@ -22,13 +21,21 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.server.json', './tsconfig.eslint.json'],
+    project: [
+      './tsconfig.json',
+      './tsconfig.server.json',
+      './tsconfig.eslint.json',
+    ],
   },
   rules: {
     'no-console': 'off',
     'comma-dangle': 'off',
     'react/jsx-filename-extension': 'off',
+    'react/prop-types': 0,
   },
 };

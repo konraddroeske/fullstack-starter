@@ -1,4 +1,4 @@
 node_modules
 built
-package.json
-yarn.lock
+dist
+coverage

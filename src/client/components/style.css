@@ -1,6 +1,9 @@
 @tailwind base;
 
 @layer base {
+  body {
+    @apply font-sans;
+  }
   h1 {
     @apply text-2xl;
   }

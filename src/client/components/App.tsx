@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import axios from 'axios';
 import { apiRoute } from '../utils';
 import './style.css';
+// import Wrapper from './common/Wrapper';
 
 export interface AppStates {
   todos: string[] | [];
@@ -47,27 +48,13 @@ const App: FunctionComponent = () => {
   return (
     <div>
       <h1>Fullstack Starter</h1>
-      <h2>Features</h2>
-      <ul>
-        <li>
-          <p>PostgreSQL</p>
-        </li>
-        <li>
-          <p>Express</p>
-        </li>
-        <li>
-          <p>React</p>
-        </li>
-        <li>
-          <p>Node</p>
-        </li>
-        <li>
-          <p>Typescript</p>
-        </li>
-        <li>
-          <p>TailwindCSS</p>
-        </li>
-      </ul>
+      <p className="my-4">
+        PostgreSQL, Express, React, Node, Typescript, TailwindCSS
+      </p>
+      <form>
+        <input type="text" />
+        <button type="button">Add Todo</button>
+      </form>
     </div>
   );
 };
