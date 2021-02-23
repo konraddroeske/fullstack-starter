@@ -9,3 +9,9 @@ const pool = new Pool({
 });
 
 export default pool;
+
+// import { PrismaClient } from '@prisma/client';
+//
+// const prisma = new PrismaClient();
+//
+// export default prisma;

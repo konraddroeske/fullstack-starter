@@ -28,11 +28,6 @@ module.exports = {
         loader: 'source-map-loader',
       },
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-      },
-      {
         test: /\.(jpe?g|gif|png|woff|woff2|eot|ttf|svg)$/,
         use: [
           {

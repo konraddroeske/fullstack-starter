@@ -1,5 +1,7 @@
 const { merge } = require('webpack-merge');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfiguration = require('./webpack.common.js');
 
 module.exports = merge(commonConfiguration, {
@@ -8,5 +10,21 @@ module.exports = merge(commonConfiguration, {
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
     }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader', options: { sourceMap: false } },
+          'postcss-loader',
+        ],
+      },
+    ],
+  },
 });

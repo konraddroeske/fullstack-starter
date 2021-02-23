@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 
-interface IReqs {
+interface Log {
   date: string;
   method: string;
   url: string;
   body: { [property: string]: any };
 }
 
-const reqs: IReqs[] = [];
+const reqs: Log[] = [];
 
 export default (req: Request, res: Response, next: NextFunction): void => {
   console.clear();
@@ -20,6 +20,8 @@ export default (req: Request, res: Response, next: NextFunction): void => {
   });
   const len: number = reqs.length;
   // do logging
-  console.table(reqs.length > 10 ? reqs.slice(len - 10, len).reverse() : reqs.reverse());
+  console.table(
+    reqs.length > 10 ? reqs.slice(len - 10, len).reverse() : reqs.reverse(),
+  );
   next();
 };

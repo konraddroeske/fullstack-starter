@@ -1,6 +1,7 @@
 import express, { Request, Response, Router, Express } from 'express';
 import bodyParser from 'body-parser';
 import router from './route';
+import errorHandler from './middlewares/error';
 
 const app: Express = express();
 
@@ -17,5 +18,13 @@ app.get('/', (req: Request, res: Response) => {
 const routes: Router[] = Object.values(router);
 app.use('/api', routes);
 
-app.listen(port);
-console.log(`App listening on ${port}`);
+app.use(errorHandler);
+
+const server = app.listen(port, () => {
+  console.log(`App listening on ${port}`);
+});
+
+process.on('unhandledRejection', (err: Error) => {
+  console.error(`Error: ${err.message}`);
+  server.close(() => process.exit(1));
+});
