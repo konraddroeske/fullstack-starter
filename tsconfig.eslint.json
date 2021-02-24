@@ -1,3 +1,8 @@
 {
-  "include": [".eslintrc.js", "webpack.config.js", "tailwind.config.js", "postcss.config.js"]
+  "include": [
+    ".eslintrc.js",
+    "./bundler",
+    "tailwind.config.js",
+    "postcss.config.js"
+  ]
 }

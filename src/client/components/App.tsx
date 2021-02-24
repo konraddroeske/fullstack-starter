@@ -1,132 +1,157 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  FormEvent,
+} from 'react';
 import axios from 'axios';
-import { apiRoute } from '../utils';
+import apiRoute from '../utils/apiRoute';
 import './style.css';
+import Wrapper from './common/Wrapper';
 
-export interface AppStates {
-  username?: string;
-  textOfPostTest: string;
-  textForPost: string;
-  textOfPutTest: string;
-  textForPut: string;
-  textOfDeleteTest: string;
-  textForDelete: string;
+interface Todo {
+  todo_id: number;
+  description: string;
 }
 
+interface Inputs {
+  addTodo: string;
+  updateTodo: string;
+}
+
+const initialInputs = {
+  addTodo: '',
+  updateTodo: '',
+};
+
 const App: FunctionComponent = () => {
-  const [data, setData] = useState<AppStates>({
-    username: '',
-    textOfPostTest: '',
-    textForPost: '',
-    textOfPutTest: '',
-    textForPut: '',
-    textOfDeleteTest: '',
-    textForDelete: '',
-  });
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [inputs, setInputs] = useState<Inputs>(initialInputs);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [updateId, setUpdateId] = useState<number | null>(null);
 
-  const {
-    username,
-    textForPost,
-    textForPut,
-    textForDelete,
-    textOfPostTest,
-    textOfPutTest,
-    textOfDeleteTest,
-  } = data;
-  const inputText = 'Input text...';
+  const getTodos = useCallback(async () => {
+    const { data: res } = await axios.get(apiRoute.getRoute('todos'));
+    return res;
+  }, []);
 
-  const getUser = () => {
-    axios
-      .get(apiRoute.getRoute('test'))
-      .then(({ data: res }) => setData({ ...data, username: res.username }));
+  const addTodo = async (description: string | undefined) => {
+    const { data: newTodo } = await axios.post(apiRoute.getRoute('todos'), {
+      description,
+    });
+
+    setInputs({ ...inputs, addTodo: '' });
+    setTodos([...todos, newTodo]);
   };
 
-  const sendUserInfo = () => {
-    const text = textOfPostTest;
+  const updateTodo = async (description: string | undefined) => {
+    const { data } = await axios.put(apiRoute.getRoute(`todos/${updateId}`), {
+      description,
+    });
 
-    axios
-      .post(apiRoute.getRoute('test'), {
-        text,
-      })
-      .then(({ data: res }) => setData({ ...data, textForPost: res.text }));
+    const { data: updatedTodo } = data;
+
+    const prevTodos = todos.filter((ele) => ele.todo_id !== updateId);
+    const newTodos = [...prevTodos, updatedTodo];
+
+    setTodos(newTodos);
+    setUpdateId(null);
+    setIsUpdating(false);
+    setInputs({ ...inputs, updateTodo: '' });
   };
 
-  const changeUserInfo = () => {
-    axios
-      .put(apiRoute.getRoute('test'), {
-        text: textOfPutTest,
-      })
-      .then(({ data: res }) => setData({ ...data, textForPut: res.text }));
+  const handleSubmit = async (
+    e: FormEvent,
+    description: string | undefined,
+  ) => {
+    e.preventDefault();
+
+    if (!isUpdating) {
+      await addTodo(description);
+    }
+
+    if (isUpdating) {
+      await updateTodo(description);
+    }
   };
 
-  const deleteUserInfo = () => {
-    axios
-      .delete(apiRoute.getRoute('test'), {
-        data: { text: textOfDeleteTest },
-      })
-      .then(({ data: res }) => setData({ ...data, textForDelete: res.text }));
+  const handleUpdate = (id: number, description: string) => {
+    setUpdateId(id);
+    setInputs({ ...inputs, updateTodo: description });
+    setIsUpdating(true);
+  };
+
+  const deleteTodo = async (id: number, prevTodos: Todo[]) => {
+    const { data: todo } = await axios.delete(apiRoute.getRoute(`todos/${id}`));
+    const { id: deletedId } = todo;
+
+    const newTodos = prevTodos.filter((ele) => ele.todo_id !== deletedId);
+    setTodos(newTodos);
+  };
+
+  useEffect(() => {
+    getTodos().then((res) => setTodos(res));
+  }, [getTodos]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   return (
-    <ul className="mx-auto px-8 py-10">
-      <li className="mx-auto mb-10">
-        <div className="flex items-center">
-          <p className="w-60">{'Result for Get: '}</p>
-          <button type="button" className="api-button" onClick={getUser}>
-            Test Get
-          </button>
-        </div>
-        <h2 className="font-bold text-gray-900 mb-4">{!!username && `Hello ${username}!`}</h2>
-      </li>
-      <li className="mx-auto mb-4">
-        <div className="flex mb-4">
-          <input
-            className="border-solid border-2 border-black px-4 w-60"
-            onChange={(e) => setData({ ...data, textOfPostTest: e.target.value })}
-            placeholder={inputText}
-          />
-          <button type="button" className="api-button" onClick={sendUserInfo}>
-            Test Post
-          </button>
-        </div>
-        <div className="flex items-center">
-          <p className="mr-2">{'Result for Post: '}</p>
-          <h3>{textForPost}</h3>
-        </div>
-      </li>
-      <li className="mx-auto mb-4 justify-between">
-        <div className="flex mb-4">
-          <input
-            className="border-solid border-2 border-black px-4 w-60"
-            onChange={(e) => setData({ ...data, textOfPutTest: e.target.value })}
-            placeholder={inputText}
-          />
-          <button type="button" className="api-button" onClick={changeUserInfo}>
-            Test Put
-          </button>
-        </div>
-        <div className="flex items-center">
-          <label className="mr-2">{'Result for Put: '}</label>
-          <h3>{textForPut}</h3>
-        </div>
-      </li>
-      <li className="mx-auto mb-4 justify-between">
-        <div className="flex mb-4">
-          <input
-            className="border-solid border-2 border-black px-4 w-60"
-            onChange={(e) => setData({ ...data, textOfDeleteTest: e.target.value })}
-            placeholder={inputText}
-          />
-          <button type="button" className="api-button" onClick={deleteUserInfo}>
-            Test Delete
-          </button>
-        </div>
-        <div className="flex items-center">
-          <p className="mr-2">{'Result for Delete: '}</p>
-          <h3>{textForDelete}</h3>
-        </div>
-      </li>
-    </ul>
+    <div className="app">
+      <Wrapper>
+        <header>
+          <h1>Fullstack Starter</h1>
+        </header>
+        <main>
+          <p className="my-4">
+            Typescript, React, Redux, Express, PostgreSQL w/ Prisma, TailwindCSS
+          </p>
+          <form
+            onSubmit={(e) =>
+              handleSubmit(e, !isUpdating ? inputs.addTodo : inputs.updateTodo)
+            }
+          >
+            <div className="flex my-4">
+              <input
+                name={!isUpdating ? 'addTodo' : 'updateTodo'}
+                type="text"
+                className="border-solid border-2 px-2 mr-4"
+                value={!isUpdating ? inputs.addTodo : inputs.updateTodo}
+                onChange={handleChange}
+              />
+              <button type="submit" className="border-solid border-2 py-2 px-4">
+                {!isUpdating ? 'Add Todo' : 'Update Todo'}
+              </button>
+            </div>
+          </form>
+          <ul>
+            {todos &&
+              todos.map(({ todo_id, description }) => (
+                <li key={todo_id} className="flex items-center mb-4">
+                  <p className="mr-4">{description}</p>
+                  <button
+                    type="button"
+                    className="border-solid border-2 py-2 px-4 mx-4"
+                    onClick={() => deleteTodo(todo_id, todos)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="button"
+                    className="border-solid border-2 py-2 px-4"
+                    onClick={() => handleUpdate(todo_id, description)}
+                  >
+                    Update
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </main>
+      </Wrapper>
+    </div>
   );
 };
 

@@ -1,13 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/index.tsx'],
+  entry: ['babel-polyfill', path.resolve(__dirname, '../src/client/index.tsx')],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: './js/[name].bundle.js',
   },
   devtool: 'source-map',
@@ -29,10 +28,6 @@ module.exports = {
         loader: 'source-map-loader',
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-      },
-      {
         test: /\.(jpe?g|gif|png|woff|woff2|eot|ttf|svg)$/,
         use: [
           {
@@ -48,22 +43,7 @@ module.exports = {
   resolve: {
     extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
   },
-  devServer: {
-    port: 3000,
-    open: true,
-    hot: true,
-    proxy: {
-      '/api/**': {
-        target: 'http://localhost:8050',
-        secure: false,
-        changeOrigin: true,
-      },
-    },
-  },
   plugins: [
-    new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist'],
-    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico',
@@ -74,7 +54,12 @@ module.exports = {
       chunkFilename: './css/[id].css',
     }),
     new CopyPlugin({
-      patterns: [{ from: path.resolve(__dirname, './src/client/assets'), to: 'assets' }],
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../src/client/assets'),
+          to: 'assets',
+        },
+      ],
     }),
   ],
 };
