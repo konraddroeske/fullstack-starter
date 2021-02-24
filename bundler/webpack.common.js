@@ -47,7 +47,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico',
-      title: 'express-typescript-react',
+      title: 'fullstack-starter',
     }),
     new MiniCssExtractPlugin({
       filename: './css/[name].css',

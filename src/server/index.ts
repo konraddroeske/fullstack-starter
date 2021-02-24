@@ -1,10 +1,10 @@
-import express, { Request, Response, Router, Express } from 'express';
+import express, { Request, Response, Router } from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import router from './route';
 import errorHandler from './middlewares/error';
 
-const app: Express = express();
+const app = express();
 
 app.use(helmet());
 app.use(bodyParser.json());
@@ -20,10 +20,10 @@ app.use('/api', routes);
 
 app.use(errorHandler);
 
-const port: number = Number(process.env.PORT) || 8050;
+const PORT = Number(process.env.PORT) || 8050;
 
-const server = app.listen(port, () => {
-  console.log(`App listening on ${port}`);
+const server = app.listen(PORT, () => {
+  console.log(`App listening on ${PORT}`);
 });
 
 process.on('unhandledRejection', (err: Error) => {
