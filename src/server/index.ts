@@ -10,8 +10,6 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const port: number = Number(process.env.PORT) || 8050;
-
 app.use(express.static('dist'));
 app.get('/', (req: Request, res: Response) => {
   res.sendFile('/dist/index.html');
@@ -21,6 +19,8 @@ const routes: Router[] = Object.values(router);
 app.use('/api', routes);
 
 app.use(errorHandler);
+
+const port: number = Number(process.env.PORT) || 8050;
 
 const server = app.listen(port, () => {
   console.log(`App listening on ${port}`);
