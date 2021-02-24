@@ -1,6 +1,7 @@
 # Fullstack Starter
+Boilerplate with crud operations and basic middleware (async, error handling, helmet, logger).
 
-## Tech
+### Tech
 - React
 - Redux
 - Typescript
@@ -10,5 +11,5 @@
 - Eslint (Airbnb)
 - Prettier (Airbnb)
 
-## Env Variables
+### Env Variables
 DATABASE_URL (https://www.prisma.io/docs/concepts/database-connectors/postgresql/)
