@@ -7,7 +7,7 @@ import React, {
   FormEvent,
 } from 'react';
 import axios from 'axios';
-import apiRoute from '../utils/apiRoute';
+import getRoute from '../utils/apiRoute';
 import './style.css';
 import Wrapper from './common/Wrapper';
 
@@ -33,12 +33,12 @@ const App: FunctionComponent = () => {
   const [updateId, setUpdateId] = useState<number | null>(null);
 
   const getTodos = useCallback(async () => {
-    const { data: res } = await axios.get(apiRoute.getRoute('todos'));
+    const { data: res } = await axios.get(getRoute('todos'));
     return res;
   }, []);
 
   const addTodo = async (description: string | undefined) => {
-    const { data: newTodo } = await axios.post(apiRoute.getRoute('todos'), {
+    const { data: newTodo } = await axios.post(getRoute('todos'), {
       description,
     });
 
@@ -47,7 +47,7 @@ const App: FunctionComponent = () => {
   };
 
   const updateTodo = async (description: string | undefined) => {
-    const { data } = await axios.put(apiRoute.getRoute(`todos/${updateId}`), {
+    const { data } = await axios.put(getRoute(`todos/${updateId}`), {
       description,
     });
 
@@ -84,7 +84,7 @@ const App: FunctionComponent = () => {
   };
 
   const deleteTodo = async (id: number, prevTodos: Todo[]) => {
-    const { data: todo } = await axios.delete(apiRoute.getRoute(`todos/${id}`));
+    const { data: todo } = await axios.delete(getRoute(`todos/${id}`));
     const { id: deletedId } = todo;
 
     const newTodos = prevTodos.filter((ele) => ele.todo_id !== deletedId);

@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from 'express';
+import path from 'path';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import router from './route';
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('dist'));
 app.get('/', (req: Request, res: Response) => {
-  res.sendFile('/dist/index.html');
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
 const routes: Router[] = Object.values(router);
