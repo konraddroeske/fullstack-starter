@@ -22,11 +22,11 @@ module.exports = {
         exclude: /node_modules/,
         use: 'ts-loader',
       },
-      // {
-      //   enforce: 'pre',
-      //   test: /\.js$/,
-      //   loader: 'source-map-loader',
-      // },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader',
+      },
       {
         test: /\.(jpe?g|gif|png|woff|woff2|eot|ttf|svg)$/,
         use: [
