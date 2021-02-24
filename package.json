@@ -5,7 +5,8 @@
   "main": "built/index.js",
   "engines": {
     "node": "14.15.4",
-    "yarn": "1.22.10"
+    "yarn": "1.22.10",
+    "npm": "7.5.2"
   },
   "scripts": {
     "build": "export NODE_ENV=production && webpack --config ./bundler/webpack.prod.js",
