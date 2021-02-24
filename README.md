@@ -5,7 +5,7 @@
 - Redux
 - Typescript
 - Express
-- PostgreSQL with Primsa
+- PostgreSQL with Prisma
 - TailwindCSS
 - Eslint (Airbnb)
 - Prettier (Airbnb)
