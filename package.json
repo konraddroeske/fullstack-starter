@@ -10,9 +10,10 @@
   },
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
-    "start": "NPM_CONFIG_PRODUCTION=false && npm run server",
+    "start": "node built/index.js",
+    "postinstall": "npm run server",
     "client": "webpack serve --config ./bundler/webpack.dev.js --devtool inline-source-map --hot",
-    "server": "tsc -p tsconfig.server.json && node built/",
+    "server": "tsc -p tsconfig.server.json",
     "dev": "concurrently \"nodemon\" \"npm run client\"",
     "server-dev": "nodemon"
   },
