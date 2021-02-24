@@ -19,8 +19,8 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
         exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
         enforce: 'pre',
@@ -41,7 +41,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
+    extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
   },
   plugins: [
     new HtmlWebpackPlugin({

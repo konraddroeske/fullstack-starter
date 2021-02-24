@@ -10,9 +10,6 @@ module.exports = merge(commonConfiguration, {
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
   ],
   module: {
     rules: [
