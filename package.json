@@ -9,9 +9,9 @@
     "npm": "7.5.2"
   },
   "scripts": {
-    "build": "webpack --config bundler/webpack.prod.js",
+    "build": "webpack --config ./bundler/webpack.prod.js",
     "start": "npm run build && npm run server",
-    "client": "webpack serve --config bundler/webpack.dev.js --devtool inline-source-map --hot",
+    "client": "webpack serve --config ./bundler/webpack.dev.js --devtool inline-source-map --hot",
     "server": "tsc -p tsconfig.server.json && node built/",
     "dev": "concurrently \"nodemon\" \"npm run client\"",
     "server-dev": "nodemon"
@@ -80,7 +80,7 @@
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.4",
     "url-loader": "^4.1.1",
-    "webpack": "^5.21.2",
+    "webpack": "^5.24.1",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
