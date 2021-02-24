@@ -1,7 +1,7 @@
 {
-  "name": "fullstack-react-starter",
+  "name": "fullstack-starter",
   "version": "1.0.0",
-  "description": "React, Typescript, Express, and TailwindCSS.",
+  "description": "React, Redux, Typescript, Express, PostgreSQL w/ Prisma, and TailwindCSS.",
   "main": "built/index.js",
   "scripts": {
     "build": "export NODE_ENV=production && webpack --config ./bundler/webpack.prod.js",
