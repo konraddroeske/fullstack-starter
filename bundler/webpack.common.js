@@ -47,7 +47,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico',
-      title: 'fullstack-starter',
+      title: 'Fullstack Starter',
     }),
     new MiniCssExtractPlugin({
       filename: './css/[name].css',
