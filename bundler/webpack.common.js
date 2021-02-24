@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', path.resolve(__dirname, '../src/client/index.tsx')],
+  entry: path.resolve(__dirname, '../src/client/index.tsx'),
   output: {
     path: path.join(__dirname, '../dist'),
     filename: './js/[name].bundle.js',
@@ -22,11 +22,11 @@ module.exports = {
         exclude: /node_modules/,
         use: 'ts-loader',
       },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader',
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader',
+      // },
       {
         test: /\.(jpe?g|gif|png|woff|woff2|eot|ttf|svg)$/,
         use: [
@@ -41,7 +41,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   plugins: [
     new HtmlWebpackPlugin({
