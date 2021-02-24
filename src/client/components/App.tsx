@@ -7,7 +7,7 @@ import React, {
   FormEvent,
 } from 'react';
 import axios from 'axios';
-import { apiRoute } from '../utils';
+import apiRoute from '../utils/apiRoute';
 import './style.css';
 import Wrapper from './common/Wrapper';
 
