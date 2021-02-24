@@ -1,10 +1,12 @@
 import express, { Request, Response, Router, Express } from 'express';
+import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import router from './route';
 import errorHandler from './middlewares/error';
 
 const app: Express = express();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

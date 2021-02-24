@@ -1,9 +1,5 @@
 class ApiRoute {
-  host: string;
-
-  constructor(host: string) {
-    this.host = host;
-  }
+  constructor(private host: string) {}
 
   getRoute(routeName: string) {
     return `${this.host}/api/${routeName}`;
