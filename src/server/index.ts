@@ -4,7 +4,6 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import router from './route';
 import errorHandler from './middlewares/error';
-import normalizePort from './utils/normalizePort';
 
 const app = express();
 
@@ -23,7 +22,7 @@ app.use('/api', routes);
 app.use(errorHandler);
 
 const host = '0.0.0.0';
-const port = normalizePort(process.env.PORT || 8050);
+const port = Number(process.env.PORT) || 8050;
 
 const server = app.listen(port, host, () => {
   console.log(`App listening on ${port}`);
