@@ -22,10 +22,11 @@ app.use('/api', routes);
 
 app.use(errorHandler);
 
-const PORT = normalizePort(process.env.PORT || 8050);
+const host = '0.0.0.0';
+const port = normalizePort(process.env.PORT || 8050);
 
-const server = app.listen(PORT, () => {
-  console.log(`App listening on ${PORT}`);
+const server = app.listen(port, host, () => {
+  console.log(`App listening on ${port}`);
 });
 
 process.on('unhandledRejection', (err: Error) => {
