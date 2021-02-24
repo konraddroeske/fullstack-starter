@@ -9,7 +9,7 @@
     "npm": "7.5.2"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && webpack --config ./bundler/webpack.prod.js",
+    "build": "webpack --config ./bundler/webpack.prod.js",
     "start": "npm run build && npm run server",
     "client": "webpack serve --config ./bundler/webpack.dev.js --devtool inline-source-map --hot",
     "server": "tsc -p tsconfig.server.json && node built/",
