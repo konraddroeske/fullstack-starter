@@ -11,7 +11,6 @@
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
     "start": "npm run server",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "client": "webpack serve --config ./bundler/webpack.dev.js --devtool inline-source-map --hot",
     "server": "tsc -p tsconfig.server.json && node built/",
     "dev": "concurrently \"nodemon\" \"npm run client\"",
