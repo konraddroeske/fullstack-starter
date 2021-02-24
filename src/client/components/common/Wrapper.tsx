@@ -7,7 +7,7 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Wrapper: FunctionComponent<Props> = ({ children }) => {
-  return <div>{children}</div>;
+  return <div className="py-12 w-11/12 mx-auto">{children}</div>;
 };
 
 export default Wrapper;

@@ -47,7 +47,7 @@ export const updateTodo = asyncHandler(
       return next(createError(404, `Todo not found with id of ${id}.`));
     }
 
-    return res.json({ msg: 'Todo was updated.', updated: todo });
+    return res.json({ msg: 'Todo was updated.', data: todo });
   },
 );
 
@@ -61,7 +61,7 @@ export const deleteTodo = asyncHandler(
       },
     });
 
-    return res.json('Todo was deleted.');
+    return res.json({ msg: 'Todo was deleted.', id: todo.todo_id });
   },
 );
 
@@ -69,12 +69,12 @@ export const postTodo = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { description } = req.body;
 
-    const result = await prisma.todo.create({
+    const todo = await prisma.todo.create({
       data: {
         description,
       },
     });
 
-    return res.json(result);
+    return res.json(todo);
   },
 );

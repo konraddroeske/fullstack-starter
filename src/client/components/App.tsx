@@ -1,60 +1,156 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  FormEvent,
+} from 'react';
 import axios from 'axios';
 import { apiRoute } from '../utils';
 import './style.css';
-// import Wrapper from './common/Wrapper';
+import Wrapper from './common/Wrapper';
 
-export interface AppStates {
-  todos: string[] | [];
-  todo: string;
-  updated?: string;
-  deleted?: string;
+interface Todo {
+  todo_id: number;
+  description: string;
 }
 
+interface Inputs {
+  addTodo: string;
+  updateTodo: string;
+}
+
+const initialInputs = {
+  addTodo: '',
+  updateTodo: '',
+};
+
 const App: FunctionComponent = () => {
-  const [data, setData] = useState<AppStates>({
-    todos: [],
-    todo: '',
-  });
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [inputs, setInputs] = useState<Inputs>(initialInputs);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [updateId, setUpdateId] = useState<number | null>(null);
 
-  const { todos, todo } = data;
+  const getTodos = useCallback(async () => {
+    const { data: res } = await axios.get(apiRoute.getRoute('todos'));
+    return res;
+  }, []);
 
-  const getTodos = () => {
-    axios
-      .get(apiRoute.getRoute('todos'))
-      .then(({ data: res }) => setData({ ...data, todos: res }));
+  const addTodo = async (description: string | undefined) => {
+    const { data: newTodo } = await axios.post(apiRoute.getRoute('todos'), {
+      description,
+    });
+
+    setInputs({ ...inputs, addTodo: '' });
+    setTodos([...todos, newTodo]);
   };
 
-  const getTodo = (id: string) => {
-    axios
-      .post(apiRoute.getRoute(`todos/${id}`))
-      .then(({ data: res }) => setData({ ...data, todo: res.description }));
+  const updateTodo = async (description: string | undefined) => {
+    const { data } = await axios.put(apiRoute.getRoute(`todos/${updateId}`), {
+      description,
+    });
+
+    const { data: updatedTodo } = data;
+
+    const prevTodos = todos.filter((ele) => ele.todo_id !== updateId);
+    const newTodos = [...prevTodos, updatedTodo];
+
+    setTodos(newTodos);
+    setUpdateId(null);
+    setIsUpdating(false);
+    setInputs({ ...inputs, updateTodo: '' });
   };
 
-  const updateTodo = (id: string, description: string) => {
-    axios
-      .put(apiRoute.getRoute(`todos/${id}`), {
-        description,
-      })
-      .then(({ data: res }) => setData({ ...data, updated: res }));
+  const handleSubmit = async (
+    e: FormEvent,
+    description: string | undefined,
+  ) => {
+    e.preventDefault();
+
+    if (!isUpdating) {
+      await addTodo(description);
+    }
+
+    if (isUpdating) {
+      await updateTodo(description);
+    }
   };
 
-  const deleteTodo = (id: string) => {
-    axios
-      .delete(apiRoute.getRoute(`todos/${id}`))
-      .then(({ data: res }) => setData({ ...data, deleted: res }));
+  const handleUpdate = (id: number, description: string) => {
+    setUpdateId(id);
+    setInputs({ ...inputs, updateTodo: description });
+    setIsUpdating(true);
+  };
+
+  const deleteTodo = async (id: number, prevTodos: Todo[]) => {
+    const { data: todo } = await axios.delete(apiRoute.getRoute(`todos/${id}`));
+    const { id: deletedId } = todo;
+
+    const newTodos = prevTodos.filter((ele) => ele.todo_id !== deletedId);
+    setTodos(newTodos);
+  };
+
+  useEffect(() => {
+    getTodos().then((res) => setTodos(res));
+  }, [getTodos]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   return (
-    <div>
-      <h1>Fullstack Starter</h1>
-      <p className="my-4">
-        PostgreSQL, Express, React, Node, Typescript, TailwindCSS
-      </p>
-      <form>
-        <input type="text" />
-        <button type="button">Add Todo</button>
-      </form>
+    <div className="app">
+      <Wrapper>
+        <header>
+          <h1>Fullstack Starter</h1>
+        </header>
+        <main>
+          <p className="my-4">
+            Typescript, React, Redux, Express, PostgreSQL w/ Prisma, TailwindCSS
+          </p>
+          <form
+            onSubmit={(e) =>
+              handleSubmit(e, !isUpdating ? inputs.addTodo : inputs.updateTodo)
+            }
+          >
+            <div className="flex my-4">
+              <input
+                name={!isUpdating ? 'addTodo' : 'updateTodo'}
+                type="text"
+                className="border-solid border-2 px-2 mr-4"
+                value={!isUpdating ? inputs.addTodo : inputs.updateTodo}
+                onChange={handleChange}
+              />
+              <button type="submit" className="border-solid border-2 py-2 px-4">
+                {!isUpdating ? 'Add Todo' : 'Update Todo'}
+              </button>
+            </div>
+          </form>
+          <ul>
+            {todos &&
+              todos.map(({ todo_id, description }) => (
+                <li key={todo_id} className="flex items-center mb-4">
+                  <p className="mr-4">{description}</p>
+                  <button
+                    type="button"
+                    className="border-solid border-2 py-2 px-4 mx-4"
+                    onClick={() => deleteTodo(todo_id, todos)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="button"
+                    className="border-solid border-2 py-2 px-4"
+                    onClick={() => handleUpdate(todo_id, description)}
+                  >
+                    Update
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </main>
+      </Wrapper>
     </div>
   );
 };
