@@ -76,7 +76,6 @@
     "prettier-config-airbnb": "^1.0.0",
     "prisma": "^2.17.0",
     "source-map-loader": "^2.0.0",
-    "style-loader": "^2.0.0",
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.4",
     "url-loader": "^4.1.1",
