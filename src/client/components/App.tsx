@@ -6,10 +6,12 @@ import React, {
   ChangeEvent,
   FormEvent,
 } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import getRoute from '../utils/apiRoute';
 import './style.css';
 import Wrapper from './common/Wrapper';
+import { RootState } from '../redux/reducers';
 
 interface Todo {
   todo_id: number;
@@ -27,6 +29,8 @@ const initialInputs = {
 };
 
 const App: FunctionComponent = () => {
+  const value = useSelector<RootState>(({ todo }) => todo.value);
+
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputs, setInputs] = useState<Inputs>(initialInputs);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
