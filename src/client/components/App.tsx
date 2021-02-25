@@ -6,9 +6,9 @@ import React, {
   ChangeEvent,
   FormEvent,
 } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'app/redux/store';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import getRoute from '../utils/apiRoute';
 import './style.css';
 import Wrapper from './common/Wrapper';
