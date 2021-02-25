@@ -7,11 +7,11 @@ import React, {
   FormEvent,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from 'app/redux/store';
 import axios from 'axios';
 import getRoute from '../utils/apiRoute';
 import './style.css';
 import Wrapper from './common/Wrapper';
-import { RootState } from '../redux/reducers';
 
 interface Todo {
   todo_id: number;
